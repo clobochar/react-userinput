@@ -8,13 +8,22 @@ function App() {
 
 
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/users/${id}`).then((res) => res.json()).then((res) => setUser(res))
+    fetch(`https://jsonplaceholder.typicode.com/users/${id}`).then(
+      res => {
+        if(res.status >= 400) {
+          alert(`The ID ${id} does not exist`)
+        }
+        return res.json()
+      }
+    ).then(
+      (res) => setUser(res)
+    )
   }, [id])
 
   function handleChange(e) {
     const input = e.target.value;
     if(Number(input) || input === "" ) {
-      setId(input)
+      setId(input);
   }
     };
 
